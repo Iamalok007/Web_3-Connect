@@ -1,26 +1,24 @@
-#Send Transaction Using MetaMask Wallet
+Send Transaction Using MetaMask Wallet
 
-This is a basic HTML website integrated with ether.js to facilitate transactions using the MetaMask wallet. Below are the key functionalities of the website:
+This repository contains a basic HTML website integrated with ether.js to facilitate transactions using the MetaMask wallet.
 
-##Connect Your Wallet
-Click the "Connect" button to connect your MetaMask wallet to the website.
-Upon successful connection, an alert will confirm the connection.
-##Check Balance
-Click the "Click to check balance" button to view your current balance.
-The balance will be displayed below the button.
-##Send Transaction
-Fill in the receiver's address, amount, message, and keyword in the form fields.
-Click the "Send Transaction" button to initiate the transaction.
-Upon successful completion, a confirmation message will be displayed.
+Features
+Connect Your Wallet: Connect your MetaMask wallet to the website with the click of a button.
+Check Balance: View your current Ethereum balance directly from the website.
+Send Transaction: Initiate transactions by filling in the recipient's address, amount, message, and keyword.
+Usage
+Clone the repository to your local machine.
+Open the index.html file in a web browser.
+Click the "Connect" button to connect your MetaMask wallet.
+Use the "Click to check balance" button to view your current Ethereum balance.
+Fill in the form fields with the transaction details and click "Send Transaction" to complete the transaction.
+Development
+The ether.js library is included in the <head> section of the HTML file.
+Contract ABI and address are provided to interact with the smart contract deployed on the Ethereum blockchain.
+Web3 provider is initialized using MetaMask, and a signer is obtained to sign transactions.
+JavaScript functions handle wallet connection, balance checking, and transaction sending.
+Contribution
+Contributions are welcome! If you find any bugs or want to suggest improvements, please open an issue or submit a pull request.
 
-##ReadMe for Developers
-This HTML file integrates the ether.js library to interact with the Ethereum blockchain. Here's a brief overview of the code:
-
-###Initialization: The ether.js library is included in the <head> section.
-Contract ABI and Address: The contract ABI and address are provided to interact with the smart contract deployed on the Ethereum blockchain.
-###Web3 Provider and Signer: The Web3 provider is initialized using MetaMask, and a signer is obtained to sign transactions.
-Connect Wallet: The connectwallet function requests access to the user's MetaMask account.
-###Check Balance: The balance function retrieves the user's Ethereum balance from MetaMask and displays it.
-###Send Transaction: The sendTransaction function sends a transaction to the specified address with the specified amount, message, and keyword.
-
-Feel free to explore and customize the code to suit your needs!
+License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code as per the terms of the license.
