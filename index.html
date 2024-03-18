@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Transaction</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"></script>
+        <script>
+            // Contract ABI
+            var abi = [
+        {
+            "inputs": [
+                {
+                    "internalType": "address payable",
+                    "name": "receiver",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "message",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "keyword",
+                    "type": "string"
+                }
+            ],
+            "name": "addToBlockchian",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "address",
+                    "name": "receiver",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "message",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "keyword",
+                    "type": "string"
+                }
+            ],
+            "name": "Transfer",
+            "type": "event"
+        },
+        {
+            "inputs": [],
+            "name": "getAllTransactions",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "address",
+                            "name": "receiver",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "amount",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "message",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "keyword",
+                            "type": "string"
+                        }
+                    ],
+                    "internalType": "struct Transactions.TransaferStruct[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getTransactionCount",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];
+    
+            // Contract Address
+            var contractAddress = '0x51be139b286346aa2e5bea2273f5599631d5a8eb'; // Replace this with your contract address
+    
+            // Instantiate web3 with current provider
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            console.log(provider);
+            const signer = provider.getSigner();
+            console.log(signer);
+            const contract=new ethers.Contract( contractAddress , abi , signer );
+            console.log(contract);
+
+            const connectwallet=async()=>{
+                try {
+                    await provider.send("eth_requestAccounts", []);
+                    console.log("connected to wallet");
+                    alert('connected to wallet')
+                } catch (error) {
+                    console.log(error);
+                    alert('error while connecting'+error.message);
+                }
+            }
+
+           const balance=async()=>{
+            try {
+                const accounts= await provider.send("eth_requestAccounts", []);
+                const currentAccount = accounts[0];
+                const balance = await provider.getBalance(currentAccount);
+                console.log(balance);
+                const balanceDisplay = document.getElementById('balanceDisplay');
+                balanceDisplay.textContent = `Balance: ${ethers.utils.formatEther(balance)} ETH`
+            } catch (error) {
+                console.log(error);
+            }
+
+           }
+
+           const sendTransaction=async()=>{
+           try {
+            // Get the values from the form
+        const receiver = document.getElementById('receiver').value;
+        const amount = document.getElementById('amount').value;
+        const message = document.getElementById('message').value;
+        const keyword = document.getElementById('keyword').value;
+
+        
+
+        // Convert amount to the required format (in wei)
+        const amountInWei = ethers.utils.parseEther(amount);
+        const data = ethers.utils.defaultAbiCoder.encode(["string", "string"], [message, keyword]);
+
+        // Send transaction to transfer Ether
+        const tx = await signer.sendTransaction({
+            to: receiver,
+            value: amountInWei,
+            data:data
+        });
+
+        // Wait for the transaction to be mined
+        await tx.wait();
+
+        console.log('Transaction successful');
+        alert('Transaction successful');
+        alert('Transaction successful');
+           } catch (error) {
+            console.log(error);
+           }
+           }
+
+
+        </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #08081e;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .body-id {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Align items at the start */
+        }
+
+        
+        .body-right {
+            width: 45%; /* Adjust width as needed */
+            border-radius: 5%;
+            background-color: #ccc;
+        }
+
+        /* Optional: Add some margin between the left and right div */
+        .body-left {
+            margin-right: 20px;
+            padding-left: 20px;
+            border-radius: 5%;
+            background-color: #ccc;
+            width: 30%;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            height: 375px;
+        }
+        .heding{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 5%;
+            
+           
+        }
+        .h1-head{
+            
+            color: aqua;
+        }
+        .balance{
+            border-radius: 3%;
+            padding-top: 7px;
+            background-color: rgb(249, 228, 201);
+        }
+    </style>
+</head>
+<body>
+    <div class="heding"><h1 class="h1-head"><u>Send Transaction Using MetaMask Wallet</u></h1></div>
+    <div class="body-id">
+        <div class="body-left">
+         <h1>connect your Wallet</h1>
+         <button onclick='connectwallet()'>connect</button>
+         <h2>Check Balance</h2>
+         <button onclick="balance()">Click to check balance</button>
+         <div id="balanceDisplay" class="balance"></div>
+        </div>
+        <div class="body-right">
+            <form>
+                <label for="receiver">Receiver Address:</label>
+                <input type="text" id="receiver" placeholder="Enter receiver address">
+                
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" placeholder="Enter amount">
+
+                <label for="message">Message:</label>
+                <input type="text" id="message" placeholder="Enter message">
+                
+                <label for="keyword">Keyword:</label>
+                <input type="text" id="keyword" placeholder="Enter keyword">
+                
+                
+                
+                <button onclick="sendTransaction()" type="button">Send Transaction</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
