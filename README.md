@@ -20,6 +20,9 @@ This repository contains a basic HTML website integrated with ether.js to facili
 - Web3 provider is initialized using MetaMask, and a signer is obtained to sign transactions.
 - JavaScript functions handle wallet connection, balance checking, and transaction sending.
 
+## Deployment
+The application is deployed and accessible at [this link](https://web-3-connect-yv4f.vercel.app).
+
 ## Contribution
 Contributions are welcome! If you find any bugs or want to suggest improvements, please open an issue or submit a pull request.
 
